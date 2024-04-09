@@ -260,7 +260,7 @@ data "aws_cloudfront_origin_request_policy" "all_viewer_except_host_header" {
 ################################################
 resource "aws_cloudfront_distribution" "cdn" {
   enabled             = true
-  aliases             = ["${var.project_domain}", "www.${var.project_domain}"]
+  aliases             = [var.project_domain, "www.${var.project_domain}"]
   is_ipv6_enabled     = true
   price_class         = "PriceClass_100"
   retain_on_delete    = false

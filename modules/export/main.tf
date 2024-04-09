@@ -152,7 +152,7 @@ resource "aws_cloudfront_function" "main" {
 ################################################
 resource "aws_cloudfront_distribution" "main" {
   enabled             = true
-  aliases             = ["${var.project_domain}", "www.${var.project_domain}"]
+  aliases             = [var.project_domain, "www.${var.project_domain}"]
   is_ipv6_enabled     = true
   price_class         = "PriceClass_100"
   retain_on_delete    = false

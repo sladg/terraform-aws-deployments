@@ -7,7 +7,7 @@ variable "project_domain" {
   type        = string
   description = "The domain name for the project."
   validation {
-    condition     = can(regex("^[a-z0-9-]{1,63}(\\.[a-z0-9-]{1,63})*$", var.domain))
+    condition     = can(regex("^[a-z0-9-]{1,63}(\\.[a-z0-9-]{1,63})*$", var.project_domain))
     error_message = "The domain name must be a valid domain name"
   }
 }
