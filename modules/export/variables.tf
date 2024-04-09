@@ -18,12 +18,6 @@ variable "environment" {
   default     = "local"
 }
 
-variable "region" {
-  type        = string
-  description = "The AWS where to deploy."
-  default     = "eu-central-1"
-}
-
 variable "zone_domain" {
   type        = string
   description = "The domain of Route53 zone to use. Defaults to {project_domain}"
@@ -45,7 +39,6 @@ variable "invalidate_on_deploy" {
 locals {
   zone_domain = var.zone_domain != "" ? var.zone_domain : var.project_domain
   source_dir  = var.source_dir != "" ? var.source_dir : "${path.cwd}/out"
-  region      = var.region
   tags = {
     Name        = var.project_name
     Env         = var.environment

@@ -3,8 +3,9 @@ terraform {
 
   required_providers {
     aws = {
-      source  = "hashicorp/aws"
-      version = ">= 5.40"
+      source                = "hashicorp/aws"
+      version               = ">= 5.40"
+      configuration_aliases = [aws.virginia]
     }
     null = {
       source  = "hashicorp/null"

@@ -1,11 +1,10 @@
-provider "aws" {
-  region = local.region
+################################################
+###### AWS region
+################################################
+data "aws_region" "current" {
+  provider = aws
 }
 
-provider "aws" {
-  alias  = "virginia"
-  region = "us-east-1"
-}
 
 ################################################
 ###### ACM
@@ -344,7 +343,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   }
 
   origin {
-    domain_name         = "${module.server_function.lambda_function_url_id}.lambda-url.${local.region}.on.aws"
+    domain_name         = "${module.server_function.lambda_function_url_id}.lambda-url.${aws_region.current.name}.on.aws"
     origin_id           = module.server_function.lambda_function_name
     connection_attempts = 3
     connection_timeout  = 10

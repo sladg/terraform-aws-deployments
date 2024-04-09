@@ -42,6 +42,7 @@
 | [aws_s3_bucket_public_access_block.s3_public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block) | resource |
 | [aws_cloudfront_cache_policy.caching_disabled](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/cloudfront_cache_policy) | data source |
 | [aws_cloudfront_origin_request_policy.all_viewer_except_host_header](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/cloudfront_origin_request_policy) | data source |
+| [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 | [aws_route53_zone.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
 
 ## Inputs
@@ -54,7 +55,6 @@
 | <a name="input_lambda_streaming"></a> [lambda\_streaming](#input\_lambda\_streaming) | Enable streaming for Lambda responses. | `bool` | `false` | no |
 | <a name="input_project_domain"></a> [project\_domain](#input\_project\_domain) | The domain name for the project. | `string` | n/a | yes |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | The name of the project | `string` | n/a | yes |
-| <a name="input_region"></a> [region](#input\_region) | The AWS where to deploy. | `string` | `"eu-central-1"` | no |
 | <a name="input_zone_domain"></a> [zone\_domain](#input\_zone\_domain) | The domain of Route53 zone to use. Defaults to {project\_domain} | `string` | `""` | no |
 
 ## Outputs
