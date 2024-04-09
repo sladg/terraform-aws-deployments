@@ -103,7 +103,7 @@ data "aws_cloudfront_cache_policy" "caching_optimized" {
 }
 
 resource "aws_cloudfront_origin_access_control" "cloudfront_s3_oac" {
-  name                              = "CloudFront S3 OAC"
+  name                              = "${var.project_name}-${var.environment}-oac-s3"
   description                       = "Cloud Front S3 OAC"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
