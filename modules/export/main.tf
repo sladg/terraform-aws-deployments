@@ -4,7 +4,7 @@
 resource "aws_acm_certificate" "main" {
   provider                  = aws.virginia
   domain_name               = var.project_domain
-  subject_alternative_names = ["www.${var.project_domain}"]
+  subject_alternative_names = var.with_www ? ["www.${var.project_domain}"] : []
   validation_method         = "DNS"
 
   lifecycle {
@@ -112,9 +112,10 @@ resource "aws_cloudfront_origin_access_control" "cloudfront_s3_oac" {
 
 ################################################
 ### Lambda@Edge handling redirects to `index.html` in subfolders
+### Also handles redirects to www subdomain
 ################################################
 resource "aws_cloudfront_function" "main" {
-  name    = "${var.project_name}-${var.environment}-redirect-to-index"
+  name    = "${var.project_name}-${var.environment}-rewrite-request"
   runtime = "cloudfront-js-1.0"
   comment = "Function for correctly point to index.html in subfolders"
   publish = true
@@ -122,6 +123,22 @@ resource "aws_cloudfront_function" "main" {
     function handler(event) {
       var request = event.request;
       var uri = request.uri;
+      var host = request.headers.host.value;
+
+      // Redirect only if host does not include www and we use `with_www` variable.
+      var shouldRedirect = !host.includes("www.") && ${var.with_www};
+
+      if(shouldRedirect) {
+        return {
+          statusCode: 301,
+          statusDescription: "Moved Permanently",
+          headers: {
+            location: {
+              value: "https://www." + host + uri,
+            },
+          },
+        };
+      }
 
       // Check whether the URI is missing a file name.
       if (uri.endsWith('/')) {
@@ -137,13 +154,12 @@ resource "aws_cloudfront_function" "main" {
   EOF
 }
 
-
 ################################################
 ### CloudFront distribution
 ################################################
 resource "aws_cloudfront_distribution" "main" {
   enabled             = true
-  aliases             = [var.project_domain, "www.${var.project_domain}"]
+  aliases             = var.with_www ? [var.project_domain, "www.${var.project_domain}"] : [var.project_domain]
   is_ipv6_enabled     = true
   price_class         = "PriceClass_100"
   retain_on_delete    = false
@@ -201,6 +217,7 @@ resource "aws_route53_record" "a_alias" {
   zone_id = data.aws_route53_zone.main.zone_id
   name    = "www.${var.project_domain}"
   type    = "A"
+  count   = var.with_www ? 1 : 0
 
   alias {
     name                   = aws_cloudfront_distribution.main.domain_name
@@ -228,6 +245,7 @@ resource "aws_route53_record" "aaaa_alias" {
   zone_id = data.aws_route53_zone.main.zone_id
   name    = "www.${var.project_domain}"
   type    = "AAAA"
+  count   = var.with_www ? 1 : 0
 
   alias {
     name                   = aws_cloudfront_distribution.main.domain_name

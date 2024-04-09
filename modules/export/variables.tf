@@ -36,6 +36,12 @@ variable "invalidate_on_deploy" {
   default     = true
 }
 
+variable "with_www" {
+  type        = bool
+  description = "Create a www subdomain and redirect apex to it."
+  default     = true
+}
+
 locals {
   zone_domain = var.zone_domain != "" ? var.zone_domain : var.project_domain
   source_dir  = var.source_dir != "" ? var.source_dir : "${path.cwd}/out"

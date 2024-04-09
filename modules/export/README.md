@@ -51,6 +51,7 @@ No modules.
 | <a name="input_project_domain"></a> [project\_domain](#input\_project\_domain) | The domain name for the project. | `string` | n/a | yes |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | The name of the project | `string` | n/a | yes |
 | <a name="input_source_dir"></a> [source\_dir](#input\_source\_dir) | The folder containing static files to be uploaded to S3. Defaults to `{cwd}/out` | `string` | `""` | no |
+| <a name="input_with_www"></a> [with\_www](#input\_with\_www) | Create a www subdomain and redirect apex to it. | `bool` | `true` | no |
 | <a name="input_zone_domain"></a> [zone\_domain](#input\_zone\_domain) | The domain of Route53 zone to use. Defaults to {project\_domain} | `string` | `""` | no |
 
 ## Outputs
