@@ -2,9 +2,8 @@
 ###### AWS region
 ################################################
 data "aws_region" "current" {
-  provider = aws
+  # Uses the default aws provider
 }
-
 
 ################################################
 ###### ACM
