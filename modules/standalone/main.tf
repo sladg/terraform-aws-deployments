@@ -417,3 +417,18 @@ resource "aws_route53_record" "apex_aaaa_alias" {
     evaluate_target_health = true
   }
 }
+
+
+################################################
+### Invalidate CloudFront cache
+################################################
+resource "null_resource" "invalidate_cache" {
+  triggers = {
+    always_run = timestamp()
+  }
+  depends_on = [aws_cloudfront_distribution.main]
+  count      = var.invalidate_on_deploy ? 1 : 0
+  provisioner "local-exec" {
+    command = "aws cloudfront create-invalidation --distribution-id ${aws_cloudfront_distribution.main.id} --paths '/*'"
+  }
+}

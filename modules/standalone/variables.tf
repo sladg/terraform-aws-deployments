@@ -42,6 +42,12 @@ variable "lambda_envs" {
   default     = {}
 }
 
+variable "invalidate_on_deploy" {
+  type        = bool
+  description = "Invalidate the CloudFront cache on deployment."
+  default     = true
+}
+
 locals {
   zone_domain = var.zone_domain != "" ? var.zone_domain : var.project_domain
   tags = {
