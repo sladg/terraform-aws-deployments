@@ -342,7 +342,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   }
 
   origin {
-    domain_name         = "${module.server_function.lambda_function_url_id}.lambda-url.${aws_region.current.name}.on.aws"
+    domain_name         = "${module.server_function.lambda_function_url_id}.lambda-url.${data.aws_region.current.name}.on.aws"
     origin_id           = module.server_function.lambda_function_name
     connection_attempts = 3
     connection_timeout  = 10
