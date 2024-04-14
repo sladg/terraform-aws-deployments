@@ -131,7 +131,7 @@ module "server_function" {
   create_role      = true
   role_description = "Server Lambda function role"
 
-  invoke_mode = var.lambda_streaming ? "RESPONSE_STREAMING" : "BUFFERED"
+  invoke_mode = var.lambda_streaming ? "RESPONSE_STREAM" : "BUFFERED"
 
   attach_cloudwatch_logs_policy     = true
   cloudwatch_logs_retention_in_days = 1
