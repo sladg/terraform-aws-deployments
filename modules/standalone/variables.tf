@@ -42,6 +42,24 @@ variable "lambda_envs" {
   default     = {}
 }
 
+variable "lambda_memory" {
+  type        = number
+  description = "The amount of memory in MB to allocate to the Lambda function."
+  default     = 512
+}
+
+variable "lambda_runtime" {
+  type        = string
+  description = "The runtime to use for the Lambda function."
+  default     = "nodejs20.x"
+}
+
+variable "lambda_architectures" {
+  type        = list(string)
+  description = "The architectures to build the Lambda function for."
+  default     = ["arm64"]
+}
+
 variable "invalidate_on_deploy" {
   type        = bool
   description = "Invalidate the CloudFront cache on deployment."

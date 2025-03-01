@@ -97,9 +97,9 @@ module "server_function" {
   function_name              = "${var.project_name}-${var.environment}-server-function"
   description                = "Server function"
   handler                    = "./server.js"
-  runtime                    = "nodejs20.x"
-  architectures              = ["arm64"]
-  memory_size                = 512
+  runtime                    = var.lambda_runtime
+  architectures              = var.lambda_architectures
+  memory_size                = var.lambda_memory
   ephemeral_storage_size     = 512
   timeout                    = 30
   publish                    = true
